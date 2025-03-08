@@ -1,0 +1,439 @@
+{
+  "last_node_id": 47,
+  "last_link_id": 40,
+  "nodes": [
+    {
+      "id": 39,
+      "type": "KSampler",
+      "pos": {
+        "0": 1040,
+        "1": 230
+      },
+      "size": {
+        "0": 315,
+        "1": 262
+      },
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 40
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 32
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 33
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 34
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            35
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        1,
+        "fixed",
+        20,
+        1,
+        "euler",
+        "simple",
+        1
+      ]
+    },
+    {
+      "id": 40,
+      "type": "EmptyLatentImage",
+      "pos": {
+        "0": 630,
+        "1": 740
+      },
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            34
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        768,
+        768,
+        1
+      ]
+    },
+    {
+      "id": 41,
+      "type": "VAEDecode",
+      "pos": {
+        "0": 1380,
+        "1": 230
+      },
+      "size": {
+        "0": 210,
+        "1": 46
+      },
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 35
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 36
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            37
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 42,
+      "type": "SaveImage",
+      "pos": {
+        "0": 1620,
+        "1": 230
+      },
+      "size": {
+        "0": 210,
+        "1": 270
+      },
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 37
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 44,
+      "type": "VAELoader",
+      "pos": {
+        "0": 1040,
+        "1": 540
+      },
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            36
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "flux_ave.safetensors"
+      ]
+    },
+    {
+      "id": 45,
+      "type": "DualCLIPLoader",
+      "pos": {
+        "0": 140,
+        "1": 260
+      },
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            38,
+            39
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DualCLIPLoader"
+      },
+      "widgets_values": [
+        "t5xxl_fp8_e4m3fn.safetensors",
+        "clip_l.safetensors",
+        "flux"
+      ]
+    },
+    {
+      "id": 21,
+      "type": "UnetLoaderGGUF",
+      "pos": {
+        "0": 630,
+        "1": 130
+      },
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            40
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UnetLoaderGGUF"
+      },
+      "widgets_values": [
+        "GGUF-flux1-dev-Q5_K_S.gguf"
+      ]
+    },
+    {
+      "id": 47,
+      "type": "CLIPTextEncodeFlux",
+      "pos": {
+        "0": 550,
+        "1": 490
+      },
+      "size": {
+        "0": 400,
+        "1": 200
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 39
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            33
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncodeFlux"
+      },
+      "widgets_values": [
+        "",
+        "",
+        4
+      ]
+    },
+    {
+      "id": 46,
+      "type": "CLIPTextEncodeFlux",
+      "pos": {
+        "0": 550,
+        "1": 240
+      },
+      "size": {
+        "0": 400,
+        "1": 200
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 38
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            32
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncodeFlux"
+      },
+      "widgets_values": [
+        "",
+        "masterpiece, 18-year-old Asina girl, solo, 18 age, close-up, blue hat, wearing a white dress, beautiful eyes, cloused mouth, heart of the ocean crystal necklace, gold-rimmed glasses, looking at the viewer, holding a big \"FLUX\", smiling,sitting outside a coffee shop, upper body, vibrant, a giant teddy bear behind her, highty detailed,",
+        4
+      ]
+    }
+  ],
+  "links": [
+    [
+      32,
+      46,
+      0,
+      39,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      33,
+      47,
+      0,
+      39,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      34,
+      40,
+      0,
+      39,
+      3,
+      "LATENT"
+    ],
+    [
+      35,
+      39,
+      0,
+      41,
+      0,
+      "LATENT"
+    ],
+    [
+      36,
+      44,
+      0,
+      41,
+      1,
+      "VAE"
+    ],
+    [
+      37,
+      41,
+      0,
+      42,
+      0,
+      "IMAGE"
+    ],
+    [
+      38,
+      45,
+      0,
+      46,
+      0,
+      "CLIP"
+    ],
+    [
+      39,
+      45,
+      0,
+      47,
+      0,
+      "CLIP"
+    ],
+    [
+      40,
+      21,
+      0,
+      39,
+      0,
+      "MODEL"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 1,
+      "offset": [
+        -25.265955259692817,
+        87.84778544776721
+      ]
+    }
+  },
+  "version": 0.4
+}
